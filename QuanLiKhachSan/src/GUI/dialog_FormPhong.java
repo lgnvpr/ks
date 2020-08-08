@@ -4,7 +4,15 @@
  * and open the template in the editor.
  */
 package GUI;
+
+import DTO.DTO_Phong;
+import Helper.MyComBoBox;
 import java.awt.Color;
+import javax.swing.DefaultComboBoxModel;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author LGNV
@@ -14,29 +22,48 @@ public class dialog_FormPhong extends javax.swing.JDialog {
     /**
      * Creates new form dialog_FormLoaiPhong
      */
+    public static boolean Action;
+    
+
     public dialog_FormPhong(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.getRootPane().setOpaque(false);
 
-        this.getContentPane ().setBackground (new Color (0, 0, 0, 0));
-        this.setBackground (new Color (0, 0, 0, 0));
-        addNew(true);
+        this.getContentPane().setBackground(new Color(0, 0, 0, 0));
+        this.setBackground(new Color(0, 0, 0, 0));
+        //addNew(true);
     }
-    
-    public void addNew(boolean addNew){
-        
-        if(!addNew){
+
+    public void addNew(boolean addNew) {
+
+        if (!addNew) {
+            Action = true;
             btnDelete.setVisible(true);
             btnXacNhan.setText("Cập Nhật");
-        }
-        else {
+
+           
+
+        } else {
+            Action = false;
             btnXacNhan.setText("Thêm mới");
             btnDelete.setVisible(false);
+
+            txtMaPhong.setText("");
+            txtMoTa.setText("");
         }
 
         repaint();
         repaint(100);
+
+    }
+
+    public void hienThi(DTO_Phong phg) {
+        String MaPhong = phg.getMaPhong();
+        String MoTa = phg.getMoTa();
+
+        txtMoTa.setText(MaPhong);
+        txtMoTa.setText(MoTa);
     }
 
     /**
@@ -50,21 +77,28 @@ public class dialog_FormPhong extends javax.swing.JDialog {
 
         lgnvPanel1 = new lgnvswing.lgnvPanel();
         jLabel1 = new javax.swing.JLabel();
-        lgnvTextField1 = new lgnvswing.lgnvTextField();
         lgnvButton1 = new lgnvswing.lgnvButton();
-        lgnvTextField2 = new lgnvswing.lgnvTextField();
+        txtMoTa = new lgnvswing.lgnvTextField();
         btnDelete = new lgnvswing.lgnvButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         btnXacNhan = new lgnvswing.lgnvButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cbbKhuVuc = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
+        txtMaPhong = new lgnvswing.lgnvTextField();
+        jLabel6 = new javax.swing.JLabel();
+        cbbLoaiPhong = new javax.swing.JComboBox<>();
+        txtTinhTrang = new lgnvswing.lgnvTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
         setUndecorated(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         lgnvPanel1.setBackground(new java.awt.Color(255, 255, 255));
         lgnvPanel1.setLGNV_ShaDownAllow(true);
@@ -78,15 +112,7 @@ public class dialog_FormPhong extends javax.swing.JDialog {
         jLabel1.setForeground(new java.awt.Color(100, 89, 242));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Phòng");
-        lgnvPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 75, 425, 43));
-
-        lgnvTextField1.setLGNV_placeholderText("Mô tả phòng...");
-        lgnvTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lgnvTextField1ActionPerformed(evt);
-            }
-        });
-        lgnvPanel1.add(lgnvTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, 311, 46));
+        lgnvPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 425, 43));
 
         lgnvButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/icons8_close_window_26px_2.png"))); // NOI18N
         lgnvButton1.setLGNV_backgroundAllow(false);
@@ -99,30 +125,35 @@ public class dialog_FormPhong extends javax.swing.JDialog {
         });
         lgnvPanel1.add(lgnvButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 40, 30, 30));
 
-        lgnvTextField2.setLGNV_placeholderText("Nhập tên phòng...");
-        lgnvTextField2.addActionListener(new java.awt.event.ActionListener() {
+        txtMoTa.setLGNV_placeholderText("Nhập tên phòng...");
+        txtMoTa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lgnvTextField2ActionPerformed(evt);
+                txtMoTaActionPerformed(evt);
             }
         });
-        lgnvPanel1.add(lgnvTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 160, 311, 46));
+        lgnvPanel1.add(txtMoTa, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 200, 311, 40));
 
         btnDelete.setBackground(new java.awt.Color(245, 36, 7));
         btnDelete.setForeground(new java.awt.Color(255, 255, 255));
-        btnDelete.setText("Xóa Loại Này !!");
+        btnDelete.setText("Xoá phòng");
         btnDelete.setLGNV_borderRadius(30);
         btnDelete.setLGNV_lineAllow(false);
         btnDelete.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        lgnvPanel1.add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 550, 170, 40));
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
+        lgnvPanel1.add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 550, 140, 30));
 
-        jLabel2.setText("Mô tả");
-        lgnvPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, 290, 30));
+        jLabel2.setText("Tình Trạng");
+        lgnvPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, 290, 30));
 
-        jLabel3.setText("Tên Phòng");
-        lgnvPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 130, 290, 30));
+        jLabel3.setText("Mô tả");
+        lgnvPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, 290, 20));
 
         jLabel4.setText("Khu Vực");
-        lgnvPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 390, 290, 30));
+        lgnvPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 400, 290, 30));
 
         btnXacNhan.setBackground(new java.awt.Color(100, 89, 242));
         btnXacNhan.setForeground(new java.awt.Color(255, 255, 255));
@@ -131,16 +162,50 @@ public class dialog_FormPhong extends javax.swing.JDialog {
         btnXacNhan.setLGNV_gradientBackgroundColor(new java.awt.Color(153, 153, 255));
         btnXacNhan.setLGNV_lineAllow(false);
         btnXacNhan.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        lgnvPanel1.add(btnXacNhan, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 490, 200, 50));
+        btnXacNhan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnXacNhanMouseClicked(evt);
+            }
+        });
+        btnXacNhan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXacNhanActionPerformed(evt);
+            }
+        });
+        lgnvPanel1.add(btnXacNhan, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 490, 140, 50));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Khu Vực 1" }));
-        lgnvPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 420, 290, 40));
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Một Giường", "Hai Giường", "Một Giường Vip", "Hai Giường Vip", " " }));
-        lgnvPanel1.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 340, 290, 40));
+        cbbKhuVuc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Khu Vực 1" }));
+        lgnvPanel1.add(cbbKhuVuc, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 430, 290, 40));
 
         jLabel5.setText("Loại Phòng");
-        lgnvPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 310, 290, 30));
+        lgnvPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 320, 290, 30));
+
+        txtMaPhong.setLGNV_placeholderText("Nhập tên phòng...");
+        txtMaPhong.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMaPhongActionPerformed(evt);
+            }
+        });
+        lgnvPanel1.add(txtMaPhong, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, 311, 40));
+
+        jLabel6.setText("Mã Phòng");
+        lgnvPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 290, 20));
+
+        cbbLoaiPhong.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+        cbbLoaiPhong.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbLoaiPhongActionPerformed(evt);
+            }
+        });
+        lgnvPanel1.add(cbbLoaiPhong, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 350, 290, 40));
+
+        txtTinhTrang.setLGNV_placeholderText("Nhập tên phòng...");
+        txtTinhTrang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTinhTrangActionPerformed(evt);
+            }
+        });
+        lgnvPanel1.add(txtTinhTrang, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, 311, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -157,17 +222,72 @@ public class dialog_FormPhong extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void lgnvTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lgnvTextField1ActionPerformed
+    private void txtMoTaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMoTaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_lgnvTextField1ActionPerformed
-
-    private void lgnvTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lgnvTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lgnvTextField2ActionPerformed
+    }//GEN-LAST:event_txtMoTaActionPerformed
 
     private void lgnvButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lgnvButton1ActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_lgnvButton1ActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        BLL.BLL_Phong.LoadDataCBBTenKhuVuc(cbbKhuVuc);
+        BLL.BLL_Phong.LoadDataCBBTenLoaiPhong(cbbLoaiPhong);
+        
+    }//GEN-LAST:event_formWindowOpened
+
+    private void btnXacNhanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXacNhanMouseClicked
+        
+    }//GEN-LAST:event_btnXacNhanMouseClicked
+
+    private void txtMaPhongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaPhongActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtMaPhongActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        String MaPhong = txtMaPhong.getTextValue();
+        BLL.BLL_Phong.Xoa(MaPhong);
+        Helper.support.ThongBaoDonGian("Thông báo", "Xoá thành công!");
+        BLL.BLL_Phong.LoadDataPhong(pnl_tab_Manager_Phong.tblPhong);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void cbbLoaiPhongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbLoaiPhongActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbbLoaiPhongActionPerformed
+
+    private void txtTinhTrangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTinhTrangActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTinhTrangActionPerformed
+
+    private void btnXacNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacNhanActionPerformed
+        String MaPhong = txtMaPhong.getTextValue();
+
+        MyComBoBox khuVuc = (MyComBoBox) cbbKhuVuc.getSelectedItem();
+        String MaKhuVuc = khuVuc.MaString();
+
+        String TinhTrang = "Trống";
+
+        MyComBoBox loaiPhong = (MyComBoBox) cbbLoaiPhong.getSelectedItem();
+        String MaLoaiPhong = loaiPhong.MaString();
+
+        String MoTa = txtMoTa.getTextValue();
+
+        DTO_Phong phg = new DTO_Phong(MaPhong, MaKhuVuc, MaLoaiPhong, TinhTrang, MoTa);
+
+        if (Action) {
+            BLL.BLL_Phong.SuaPhong(phg);
+             BLL.BLL_Phong.LoadDataPhong(pnl_tab_Manager_Phong.tblPhong);
+            
+        } else {
+            DTO_Phong phgNew = new DTO_Phong(MaPhong, MaKhuVuc, MaLoaiPhong, TinhTrang, MoTa);
+            System.out.println(phgNew);
+            BLL.BLL_Phong.ThemPhong(phgNew);
+             BLL.BLL_Phong.LoadDataPhong(pnl_tab_Manager_Phong.tblPhong);
+             
+        }
+       
+    }//GEN-LAST:event_btnXacNhanActionPerformed
 
     /**
      * @param args the command line arguments
@@ -196,6 +316,8 @@ public class dialog_FormPhong extends javax.swing.JDialog {
         }
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -215,16 +337,18 @@ public class dialog_FormPhong extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private lgnvswing.lgnvButton btnDelete;
     private lgnvswing.lgnvButton btnXacNhan;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    public static javax.swing.JComboBox<String> cbbKhuVuc;
+    public static javax.swing.JComboBox<String> cbbLoaiPhong;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private lgnvswing.lgnvButton lgnvButton1;
     private lgnvswing.lgnvPanel lgnvPanel1;
-    private lgnvswing.lgnvTextField lgnvTextField1;
-    private lgnvswing.lgnvTextField lgnvTextField2;
+    public static lgnvswing.lgnvTextField txtMaPhong;
+    public static lgnvswing.lgnvTextField txtMoTa;
+    public static lgnvswing.lgnvTextField txtTinhTrang;
     // End of variables declaration//GEN-END:variables
 }

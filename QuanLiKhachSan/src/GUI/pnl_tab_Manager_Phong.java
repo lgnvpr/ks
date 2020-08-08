@@ -5,6 +5,9 @@
  */
 package GUI;
 
+import DTO.DTO_Phong;
+import static GUI.dialog_FormPhong.cbbKhuVuc;
+import static GUI.dialog_FormPhong.cbbLoaiPhong;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.util.TimerTask;
@@ -17,22 +20,22 @@ import lgnvswing.lgnvButton;
  * @author LGNV
  */
 public class pnl_tab_Manager_Phong extends javax.swing.JPanel {
-    
+
     /**
      * Creates new form tab_Manager_LoaiPhong
      */
     public pnl_tab_Manager_Phong() {
         initComponents();
         cssTable();
-    }
-    
-    public void cssTable(){
-        tblKhachHang.getTableHeader().setBackground(new Color(100, 89, 242));
-        tblKhachHang.getTableHeader().setForeground(Color.white);
-        tblKhachHang.getTableHeader().setPreferredSize(new Dimension(100, 50));
+        BLL.BLL_Phong.LoadDataPhong(tblPhong);
+        
     }
 
-    
+    public void cssTable() {
+        tblPhong.getTableHeader().setBackground(new Color(100, 89, 242));
+        tblPhong.getTableHeader().setForeground(Color.white);
+        tblPhong.getTableHeader().setPreferredSize(new Dimension(100, 50));
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -48,7 +51,7 @@ public class pnl_tab_Manager_Phong extends javax.swing.JPanel {
         lgnvButton1 = new lgnvswing.lgnvButton();
         lgnvTextField1 = new lgnvswing.lgnvTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblKhachHang = new javax.swing.JTable();
+        tblPhong = new javax.swing.JTable();
 
         setLayout(new java.awt.CardLayout());
 
@@ -107,32 +110,35 @@ public class pnl_tab_Manager_Phong extends javax.swing.JPanel {
 
         lgnvPanel1.add(lgnvPanel2, java.awt.BorderLayout.PAGE_START);
 
-        tblKhachHang.setModel(new javax.swing.table.DefaultTableModel(
+        tblPhong.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "STT", "Mã Phòng", "Tên Loại Phòng", "Trạng Thái", "Mô Tả"
+                "STT", "Mã Phòng", "Khu vực", "Tên Loại Phòng", "Trạng Thái", "Mô Tả"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        tblKhachHang.setRowHeight(30);
-        tblKhachHang.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblPhong.setRowHeight(30);
+        tblPhong.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblKhachHangMouseClicked(evt);
+                tblPhongMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tblKhachHang);
+        jScrollPane1.setViewportView(tblPhong);
+        if (tblPhong.getColumnModel().getColumnCount() > 0) {
+            tblPhong.getColumnModel().getColumn(0).setPreferredWidth(10);
+        }
 
         lgnvPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
@@ -140,19 +146,43 @@ public class pnl_tab_Manager_Phong extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lgnvButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lgnvButton1ActionPerformed
+
         main.dialogFormPhong.addNew(true);
         main.dialogFormPhong.setVisible(true);
-        
+
         repaint();
     }//GEN-LAST:event_lgnvButton1ActionPerformed
 
-    private void tblKhachHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblKhachHangMouseClicked
-        if(evt.getClickCount()==2){
+    private void tblPhongMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPhongMouseClicked
+        int row = tblPhong.getSelectedRow();
+        String MaPhong = tblPhong.getValueAt(row, 1).toString();
+        // String KhuVuc = tblPhong.getValueAt(row, 2).toString();
+        String TenLoaiPhong = tblPhong.getValueAt(row, 2).toString();
+        DTO_Phong phg = BLL.BLL_Phong.GetPhong(MaPhong);
+        phg.setMaLoaiPhong(TenLoaiPhong);
+
+        if (evt.getClickCount() == 2) {
+            dialog_FormPhong.cbbLoaiPhong.setSelectedIndex(1);
+            dialog_FormPhong.txtMaPhong.setText(phg.getMaPhong());
+            dialog_FormPhong.txtMoTa.setText(phg.getMoTa());
+            dialog_FormPhong.txtTinhTrang.setText(phg.getTinhTrangPhong());
+            //System.out.println(phg.getMaLoaiPhong());
+//            ResultSet rs = DAL.DAL_Phong.GetTenLoaiPhongTheoMa(phg.getMaPhong());
+//            try {
+//                String TenLoaiPhong = rs.getString("TenLoaiPhong");
+            
+//            } catch (SQLException ex) {
+//                Logger.getLogger(dialog_FormPhong.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+
+            //System.out.println(phg.getMaLoaiPhong());
+            main.dialogFormPhong.cbbKhuVuc.setSelectedItem(phg.getMaKhuVuc());
+
             main.dialogFormPhong.addNew(false);
             main.dialogFormPhong.setVisible(true);
-            
+
         }
-    }//GEN-LAST:event_tblKhachHangMouseClicked
+    }//GEN-LAST:event_tblPhongMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -161,6 +191,6 @@ public class pnl_tab_Manager_Phong extends javax.swing.JPanel {
     private lgnvswing.lgnvPanel lgnvPanel1;
     private lgnvswing.lgnvPanel lgnvPanel2;
     private lgnvswing.lgnvTextField lgnvTextField1;
-    private javax.swing.JTable tblKhachHang;
+    public static javax.swing.JTable tblPhong;
     // End of variables declaration//GEN-END:variables
 }

@@ -16,6 +16,20 @@ public class DTO_Phong {
     String tinhTrangPhong;
     String moTa;
 
+    public DTO_Phong(String maPhong, String maKhuVuc, String maLoaiPhong, String tinhTrangPhong, String moTa) {
+        this.maPhong = maPhong;
+        this.maKhuVuc = maKhuVuc;
+        this.maLoaiPhong = maLoaiPhong;
+        this.tinhTrangPhong = tinhTrangPhong;
+        this.moTa = moTa;
+    }
+
+    public DTO_Phong() {
+    }
+    
+    
+    
+
     public String getMaPhong() {
         return maPhong;
     }
