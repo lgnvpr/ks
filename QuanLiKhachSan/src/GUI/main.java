@@ -7,6 +7,8 @@ package GUI;
 
 import DAL.*;
 import BLL.*;
+import static GUI.dialog_FormPhong.cbbKhuVuc;
+import static GUI.dialog_FormPhong.cbbLoaiPhong;
 
 /**
  *
@@ -31,7 +33,7 @@ public class main {
 
     public static void main(String[] args) throws InterruptedException {
         chooseLookAndFeel();
-
+      
         welcome.setVisible(true);
 
         for (int i = 0; i < 100; i++) {
@@ -80,7 +82,7 @@ public class main {
                 case 62: {
                     welcome.lblContenLoad.setText("Đang khởi tạo tab manager...");
                     tabManager = new pnl_Tab_Manager();
-                    
+
                     break;
                 }
 
@@ -103,7 +105,7 @@ public class main {
                 case 76: {
                     welcome.lblContenLoad.setText("Create Form Khách Hàng....");
                     dialogFormKhachHang = new dialog_FormKhachHang(home, true);
-                    
+
                     break;
                 }
 

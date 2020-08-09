@@ -26,12 +26,15 @@ public class dialog_FormPhong extends javax.swing.JDialog {
     
 
     public dialog_FormPhong(java.awt.Frame parent, boolean modal) {
+       
         super(parent, modal);
         initComponents();
         this.getRootPane().setOpaque(false);
 
         this.getContentPane().setBackground(new Color(0, 0, 0, 0));
-        this.setBackground(new Color(0, 0, 0, 0));
+        this.setBackground(new Color(0, 0, 0, 0)); 
+        BLL.BLL_Phong.LoadDataCBBTenLoaiPhong(cbbLoaiPhong);
+        BLL.BLL_Phong.LoadDataCBBTenKhuVuc(cbbKhuVuc);
         //addNew(true);
     }
 
@@ -51,6 +54,7 @@ public class dialog_FormPhong extends javax.swing.JDialog {
 
             txtMaPhong.setText("");
             txtMoTa.setText("");
+            txtTinhTrang.setText("Trống");
         }
 
         repaint();
@@ -231,8 +235,7 @@ public class dialog_FormPhong extends javax.swing.JDialog {
     }//GEN-LAST:event_lgnvButton1ActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        BLL.BLL_Phong.LoadDataCBBTenKhuVuc(cbbKhuVuc);
-        BLL.BLL_Phong.LoadDataCBBTenLoaiPhong(cbbLoaiPhong);
+       
         
     }//GEN-LAST:event_formWindowOpened
 
@@ -246,9 +249,10 @@ public class dialog_FormPhong extends javax.swing.JDialog {
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         String MaPhong = txtMaPhong.getTextValue();
-        BLL.BLL_Phong.Xoa(MaPhong);
-        Helper.support.ThongBaoDonGian("Thông báo", "Xoá thành công!");
+        BLL.BLL_Phong.Xoa(MaPhong); 
         BLL.BLL_Phong.LoadDataPhong(pnl_tab_Manager_Phong.tblPhong);
+        Helper.support.ThongBaoDonGian("Thông báo", "Xoá thành công!");
+       
         this.setVisible(false);
     }//GEN-LAST:event_btnDeleteActionPerformed
 
@@ -278,12 +282,14 @@ public class dialog_FormPhong extends javax.swing.JDialog {
         if (Action) {
             BLL.BLL_Phong.SuaPhong(phg);
              BLL.BLL_Phong.LoadDataPhong(pnl_tab_Manager_Phong.tblPhong);
+              Helper.support.ThongBaoDonGian("Thông Báo", "Sửa thành công!");
             
         } else {
             DTO_Phong phgNew = new DTO_Phong(MaPhong, MaKhuVuc, MaLoaiPhong, TinhTrang, MoTa);
             System.out.println(phgNew);
             BLL.BLL_Phong.ThemPhong(phgNew);
              BLL.BLL_Phong.LoadDataPhong(pnl_tab_Manager_Phong.tblPhong);
+              Helper.support.ThongBaoDonGian("Thông Báo", "Thêm thành công!");
              
         }
        

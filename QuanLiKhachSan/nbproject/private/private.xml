@@ -3,8 +3,21 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/LGNV/Downloads/QuanLiKhachSan/QuanLiKhachSan/src/BLL/BLL_KhachHang.java</file>
-            <file>file:/C:/Users/LGNV/Downloads/QuanLiKhachSan/QuanLiKhachSan/src/BLL/BLL_LoaiPhong.java</file>
+            <file>file:/C:/Users/quyet/Desktop/QLKS/ks/QuanLiKhachSan/src/GUI/pnl_tab_Manager_Phong.java</file>
+            <file>file:/C:/Users/quyet/Desktop/QLKS/ks/QuanLiKhachSan/src/DAL/DAL_LoaiPhong.java</file>
+            <file>file:/C:/Users/quyet/Desktop/QLKS/ks/QuanLiKhachSan/src/Helper/MyComBoBox.java</file>
+            <file>file:/C:/Users/quyet/Desktop/QLKS/ks/QuanLiKhachSan/src/BLL/BLL_Phong.java</file>
+            <file>file:/C:/Users/quyet/Desktop/QLKS/ks/QuanLiKhachSan/src/DTO/DTO_Phong.java</file>
+            <file>file:/C:/Users/quyet/Desktop/QLKS/ks/QuanLiKhachSan/src/DAL/DAL_Phong.java</file>
+            <file>file:/C:/Users/quyet/Desktop/QLKS/ks/QuanLiKhachSan/src/Helper/support.java</file>
+            <file>file:/C:/Users/quyet/Desktop/QLKS/ks/QuanLiKhachSan/src/GUI/main.java</file>
+            <file>file:/C:/Users/quyet/Desktop/QLKS/ks/QuanLiKhachSan/src/GUI/pnl_tab_Manager_LoaiPhong.java</file>
+            <file>file:/C:/Users/quyet/Desktop/QLKS/ks/QuanLiKhachSan/src/DAL/Dao_ConnectSQL.java</file>
+            <file>file:/C:/Users/quyet/Desktop/QLKS/ks/QuanLiKhachSan/src/GUI/dialog_FormPhong.java</file>
+            <file>file:/C:/Users/quyet/Desktop/QLKS/ks/QuanLiKhachSan/src/GUI/pnl_tab_Manager_KhachHang.java</file>
+            <file>file:/C:/Users/quyet/Desktop/QLKS/ks/QuanLiKhachSan/src/BLL/BLL_LoaiPhong.java</file>
+            <file>file:/C:/Users/quyet/Desktop/QLKS/ks/QuanLiKhachSan/src/BLL/BLL_KhachHang.java</file>
+            <file>file:/C:/Users/quyet/Desktop/QLKS/ks/QuanLiKhachSan/src/GUI/dialog_FormLoaiPhong.java</file>
         </group>
     </open-files>
 </project-private>

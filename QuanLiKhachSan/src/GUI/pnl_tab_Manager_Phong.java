@@ -8,6 +8,7 @@ package GUI;
 import DTO.DTO_Phong;
 import static GUI.dialog_FormPhong.cbbKhuVuc;
 import static GUI.dialog_FormPhong.cbbLoaiPhong;
+import Helper.MyComBoBox;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.util.TimerTask;
@@ -28,7 +29,7 @@ public class pnl_tab_Manager_Phong extends javax.swing.JPanel {
         initComponents();
         cssTable();
         BLL.BLL_Phong.LoadDataPhong(tblPhong);
-        
+
     }
 
     public void cssTable() {
@@ -157,12 +158,14 @@ public class pnl_tab_Manager_Phong extends javax.swing.JPanel {
         int row = tblPhong.getSelectedRow();
         String MaPhong = tblPhong.getValueAt(row, 1).toString();
         // String KhuVuc = tblPhong.getValueAt(row, 2).toString();
-        String TenLoaiPhong = tblPhong.getValueAt(row, 2).toString();
+        String TenLoaiPhong = tblPhong.getValueAt(row, 3).toString();
         DTO_Phong phg = BLL.BLL_Phong.GetPhong(MaPhong);
         phg.setMaLoaiPhong(TenLoaiPhong);
 
+        MyComBoBox.ChonCBB(TenLoaiPhong, dialog_FormPhong.cbbLoaiPhong);
         if (evt.getClickCount() == 2) {
-            dialog_FormPhong.cbbLoaiPhong.setSelectedIndex(1);
+            //dialog_FormPhong.cbbLoaiPhong.setSelectedItem("VIP");
+
             dialog_FormPhong.txtMaPhong.setText(phg.getMaPhong());
             dialog_FormPhong.txtMoTa.setText(phg.getMoTa());
             dialog_FormPhong.txtTinhTrang.setText(phg.getTinhTrangPhong());
@@ -170,11 +173,10 @@ public class pnl_tab_Manager_Phong extends javax.swing.JPanel {
 //            ResultSet rs = DAL.DAL_Phong.GetTenLoaiPhongTheoMa(phg.getMaPhong());
 //            try {
 //                String TenLoaiPhong = rs.getString("TenLoaiPhong");
-            
+
 //            } catch (SQLException ex) {
 //                Logger.getLogger(dialog_FormPhong.class.getName()).log(Level.SEVERE, null, ex);
 //            }
-
             //System.out.println(phg.getMaLoaiPhong());
             main.dialogFormPhong.cbbKhuVuc.setSelectedItem(phg.getMaKhuVuc());
 
