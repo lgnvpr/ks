@@ -17,7 +17,7 @@ public class Dao_ConnectSQL {
 
     Connection conn;
     public static String user = "sa";
-    public static String Pass = "songlong";
+    public static String Pass = "123";
     public static String Server = "localhost";
     public static String DataBaseName = "QuanLiKhachSan_Nhom1";
 

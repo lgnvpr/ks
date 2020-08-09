@@ -21,6 +21,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -185,5 +186,9 @@ public class support {
             JOptionPane.showMessageDialog(null, content+" thành công !!");
         }
         else JOptionPane.showMessageDialog(null, content+" thất bại !!");
+    }
+    
+    public static void ThongBaoDonGian(String title, String content){
+        JOptionPane.showMessageDialog(new JFrame(), content, title, JOptionPane.INFORMATION_MESSAGE);
     }
 }
