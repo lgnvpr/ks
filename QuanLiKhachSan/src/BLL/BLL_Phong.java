@@ -57,10 +57,10 @@ public class BLL_Phong {
         return null;
     }
 
-    public static void LoadDataCBBTenLoaiPhong(JComboBox cbbLoaiPhong) {
-        ResultSet rs = DAL_Phong.LayLoaiPhong();
+    public static void LoadDataCBBTenLoaiPhong(JComboBox cbb) {
+        ResultSet rs = DAL.DAL_Phong.LayLoaiPhong();
 
-        DefaultComboBoxModel cbbModel = (DefaultComboBoxModel) cbbLoaiPhong.getModel();
+        DefaultComboBoxModel cbbModel = (DefaultComboBoxModel) cbb.getModel();
         cbbModel.removeAllElements(); // Xoá dữ liệu cũ trong Combobox
         try {
             while (rs.next()) {
@@ -71,14 +71,14 @@ public class BLL_Phong {
                 cbbModel.addElement(myCbb);
             }
         } catch (SQLException ex) {
-            System.out.println("Loi lay cbb");
+            System.out.println("Loi lay cbb loai phong");
         }
     }
 
-    public static void LoadDataCBBTenKhuVuc(JComboBox cbbKhuVuc) {
-        ResultSet rs = DAL_Phong.LayKhuVuc();
+    public static void LoadDataCBBTenKhuVuc(JComboBox cbb) {
+        ResultSet rs = DAL.DAL_Phong.LayKhuVuc();
 
-        DefaultComboBoxModel cbbModel = (DefaultComboBoxModel) cbbKhuVuc.getModel();
+        DefaultComboBoxModel cbbModel = (DefaultComboBoxModel) cbb.getModel();
         cbbModel.removeAllElements(); // Xoá dữ liệu cũ trong Combobox
         try {
             while (rs.next()) {
@@ -89,7 +89,7 @@ public class BLL_Phong {
                 cbbModel.addElement(myCbb);
             }
         } catch (SQLException ex) {
-            System.out.println("Loi lay cbb");
+            System.out.println("Loi lay cbb khu vuc");
         }
     }
 
@@ -138,16 +138,19 @@ public class BLL_Phong {
         return true;
     }
 
-   
-
     //Them nhan vien
     public static void ThemPhong(DTO_Phong phg) {
         // Gọi hàm kiểm tra các thoong tin của nhân viên
         boolean kiemTra = KiemTraPhong(phg);
         // Nếu kiểm tra ok thì thực hiện gọi hàm thêm nhân viên từ DAL
         if (kiemTra) {
-            DAL_Phong.ThemPhong(phg);
-Helper.support.ThongBaoDonGian("Thông Báo", "Thêm thành công!");
+            try {
+                DAL_Phong.ThemPhong(phg);
+
+            } catch (Exception e) {
+                System.out.println("Loi them phong");
+            }
+
         }
     }
 
@@ -156,15 +159,20 @@ Helper.support.ThongBaoDonGian("Thông Báo", "Thêm thành công!");
         //boolean kiemTra = KiemTraPhong(phg);
         // Nếu kiểm tra ok thì thực hiện gọi hàm thêm nhân viên từ DAL
         if (true) {
-            DAL_Phong.SuaPhong(phg);
-             Helper.support.ThongBaoDonGian("Thông Báo", "Sửa Thành công!");
+
+            try {
+                DAL_Phong.SuaPhong(phg);
+
+            } catch (Exception e) {
+                System.out.println("Loi them phong");
+            }
         }
     }
 
     //xoa
     public static void Xoa(String MaPhong) {
         //for (String MaNV : ListMaNV) {
-            DAL_Phong.XoaPhong(MaPhong);
+        DAL_Phong.XoaPhong(MaPhong);
         //}
     }
 
@@ -198,29 +206,4 @@ Helper.support.ThongBaoDonGian("Thông Báo", "Thêm thành công!");
         }
     }
 
-    //Lấy thông tin nhân viên
-//    public static Phong GetPhong(String MaNV) {
-//        ResultSet rs = DAL_Phong.GetPhongTheoMa(MaNV);
-//        try {
-//            if (rs.next()) {
-//                Phong phg = new Phong();
-//                phg.setMaPhong(rs.getInt("MaPhong"));
-//                phg.setTenPhong(rs.getString("TenPhong"));
-//                phg.setDiaChi(rs.getString("DiaChi"));
-//                phg.setSDT(rs.getString("SoDienThoai"));
-//                phg.setGioiTinh(rs.getBoolean("GioiTinh"));
-//                phg.setChucVu(rs.getString("ChucVu"));
-//                phg.setNgaySinh(rs.getDate("NgaySinh"));
-//                phg.setNgayVaoLam(rs.getDate("NgayVaoLam"));
-//                phg.setTenDangNhap(rs.getString("TenDangNhap"));
-//                phg.setMatKhau(rs.getString("MatKhau"));
-//
-//                return phg;
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(BLLPhong.class.getName()).log(Level.SEVERE, null, ex);
-//            return null;
-//        }
-//        return null;
-//    }
 }

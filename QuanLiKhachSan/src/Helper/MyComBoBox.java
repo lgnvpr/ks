@@ -5,6 +5,9 @@
  */
 package Helper;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+
 /**
  *
  * @author ADMIN
@@ -19,15 +22,33 @@ public class MyComBoBox {
     
     @Override
     public String toString(){
-        return text.toString();
+        return text;
     }
     
     
     public int maInt(){
-        return Integer.parseInt(value.toString());
+        return Integer.parseInt(value);
     }
     
     public String MaString(){
-        return value.toString();
+        return value;
+    }
+    
+    public static void ChonCBB(String text, JComboBox cbb) {
+        DefaultComboBoxModel cbbModel;
+
+        cbbModel = (DefaultComboBoxModel) cbb.getModel();
+
+        for (int i = 0; i < cbb.getItemCount(); i++) {
+            MyComBoBox myCbb2 = (MyComBoBox) cbbModel.getElementAt(i);
+            //System.out.println(myCbb.text.equals(SoPhong));
+
+            if (myCbb2.text.equals(text)) {
+
+                cbb.setSelectedIndex(i);
+                break;
+            }
+        }
+
     }
 }

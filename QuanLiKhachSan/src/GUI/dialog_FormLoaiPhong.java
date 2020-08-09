@@ -197,7 +197,8 @@ public class dialog_FormLoaiPhong extends javax.swing.JDialog {
         } else {
             BLL_LoaiPhong.update(loaiPhong);
             System.out.println("on dialog loaiPhong update");
-
+            BLL.BLL_Phong.LoadDataCBBTenLoaiPhong(dialog_FormPhong.cbbLoaiPhong);
+            BLL.BLL_Phong.LoadDataPhong(pnl_tab_Manager_Phong.tblPhong);
         }
         main.dialogFormLoaiPhong.setVisible(false);
         BLL_LoaiPhong.getALLData();
